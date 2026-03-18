@@ -270,32 +270,73 @@ int inst_to_binary(
         binary += (0x0 << 25);
     } else if (is_opcode(opcode) == SUB) {
         /* Lab2-1 assignment */
-        warn("Lab2-1 assignment: SUB instruction\n");
-        exit(EXIT_FAILURE);
+        binary = (0x0C << 2) + 0x03;
+        binary += (reg_to_num(arg1, line_no) << 7);
+        binary += (reg_to_num(arg2, line_no) << 15);
+        binary += (reg_to_num(arg3, line_no) << 20);
+        binary += (0x20 << 25);
+        //warn("Lab2-1 assignment: SUB instruction\n");
+        //exit(EXIT_FAILURE);
     } else if (is_opcode(opcode) == SLL) {
         /* Lab2-1 assignment */
-        warn("Lab2-1 assignment: SLL instruction\n");
-        exit(EXIT_FAILURE);
+        binary = (0x0C << 2) + 0x03;
+        binary += (reg_to_num(arg1, line_no) << 7);
+        binary += (0x1 << 12);
+        binary += (reg_to_num(arg2, line_no) << 15);
+        binary += (reg_to_num(arg3, line_no) << 20);
+        binary += (0x0 << 25);
+        //warn("Lab2-1 assignment: SLL instruction\n");
+        //exit(EXIT_FAILURE);
     } else if (is_opcode(opcode) == XOR) {
         /* Lab2-1 assignment */
-        warn("Lab2-1 assignment: XOR instruction\n");
-        exit(EXIT_FAILURE);
+        binary = (0x0C << 2) + 0x03;
+        binary += (reg_to_num(arg1, line_no) << 7);
+        binary += (0x4 << 12);
+        binary += (reg_to_num(arg2, line_no) << 15);
+        binary += (reg_to_num(arg3, line_no) << 20);
+        binary += (0x0 << 25);
+        //warn("Lab2-1 assignment: XOR instruction\n");
+        //exit(EXIT_FAILURE);
     } else if (is_opcode(opcode) == SRL) {
         /* Lab2-1 assignment */
-        warn("Lab2-1 assignment: SRL instruction\n");
-        exit(EXIT_FAILURE);
+        binary = (0x0C << 2) + 0x03;
+        binary += (reg_to_num(arg1, line_no) << 7);
+        binary += (0x5 << 12);
+        binary += (reg_to_num(arg2, line_no) << 15);
+        binary += (reg_to_num(arg3, line_no) << 20);
+        binary += (0x0 << 25);
+        //warn("Lab2-1 assignment: SRL instruction\n");
+        //exit(EXIT_FAILURE);
     } else if (is_opcode(opcode) == SRA) {
         /* Lab2-1 assignment */
-        warn("Lab2-1 assignment: SRA instruction\n");
-        exit(EXIT_FAILURE);
+        binary = (0x0C << 2) + 0x03;
+        binary += (reg_to_num(arg1, line_no) << 7);
+        binary += (0x5 << 12);
+        binary += (reg_to_num(arg2, line_no) << 15);
+        binary += (reg_to_num(arg3, line_no) << 20);
+        binary += (0x20 << 25);
+        //warn("Lab2-1 assignment: SRA instruction\n");
+        //exit(EXIT_FAILURE);
     } else if (is_opcode(opcode) == OR) {
         /* Lab2-1 assignment */
-        warn("Lab2-1 assignment: OR instruction\n");
-        exit(EXIT_FAILURE);
+        binary = (0x0C << 2) + 0x03;
+        binary += (reg_to_num(arg1, line_no) << 7);
+        binary += (0x6 << 12);
+        binary += (reg_to_num(arg2, line_no) << 15);
+        binary += (reg_to_num(arg3, line_no) << 20);
+        binary += (0x0 << 25);
+        //warn("Lab2-1 assignment: OR instruction\n");
+        //exit(EXIT_FAILURE);
     } else if (is_opcode(opcode) == AND) {
         /* Lab2-1 assignment */
-        warn("Lab2-1 assignment: AND instruction\n");
-        exit(EXIT_FAILURE);
+        binary = (0x0C << 2) + 0x03;
+        binary += (reg_to_num(arg1, line_no) << 7);
+        binary += (0x7 << 12);
+        binary += (reg_to_num(arg2, line_no) << 15);
+        binary += (reg_to_num(arg3, line_no) << 20);
+        binary += (0x0 << 25);
+        //warn("Lab2-1 assignment: AND instruction\n");
+        //exit(EXIT_FAILURE);
     }
 
 
