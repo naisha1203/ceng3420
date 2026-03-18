@@ -198,19 +198,28 @@ int inst_to_binary(
         binary += (MASK11_0(validate_imm(arg3, 12, line_no)) << 20);
     } else if (is_opcode(opcode) == SLLI) {
         /* Lab2-1 assignment */
-        warn("Lab2-1 assignment: SLLI instruction\n");
-        exit(EXIT_FAILURE);
+        binary = (0x04 << 2) + 0x03;
+        binary += (reg_to_num(arg1, line_no) << 7);
+        binary += (0x1 << 12);
+        binary += (reg_to_num(arg2, line_no) << 15);
+        binary += (validate_imm(arg3, 5, line_no) << 20);
     } else if (is_opcode(opcode) == XORI) {
         /* Lab2-1 assignment */
-        warn("Lab2-1 assignment: XORI instruction\n");
-        exit(EXIT_FAILURE);
+        binary = (0x04 << 2) + 0x03;
+        binary += (reg_to_num(arg1, line_no) << 7);
+        binary += (0x4 << 12);
+        binary += (reg_to_num(arg2, line_no) << 15);
+        binary += (MASK11_0(validate_imm(arg3, 12, line_no)) << 20);
     } else if (is_opcode(opcode) == SRLI) {
         /*
          * Lab2-1 assignment
          * tip: you may need the function `lower5bit`
          */
-        warn("Lab2-1 assignment: SRLI instruction\n");
-        exit(EXIT_FAILURE);
+        binary = (0x04 << 2) + 0x03;
+        binary += (reg_to_num(arg1, line_no) << 7);
+        binary += (0x5 << 12);
+        binary += (reg_to_num(arg2, line_no) << 15);
+        binary += (lower5bit(validate_imm(arg3, 5, line_no)) << 20);
     } else if (is_opcode(opcode) == SRAI) {
         /*
          * Lab2-1 assignment
