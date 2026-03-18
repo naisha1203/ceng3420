@@ -225,16 +225,31 @@ int inst_to_binary(
          * Lab2-1 assignment
          * tip: you may need the function `lower5bit`
          */
-        warn("Lab2-1 assignment: SRAI instruction\n");
-        exit(EXIT_FAILURE);
+        binary = (0x04 << 2) + 0x03;
+        binary += (reg_to_num(arg1, line_no) << 7);
+        binary += (0x5 << 12);
+        binary += (reg_to_num(arg2, line_no) << 15);
+        binary += (lower5bit(validate_imm(arg3, 5, line_no)) << 20);
+        //warn("Lab2-1 assignment: SRAI instruction\n");
+        //exit(EXIT_FAILURE);
     } else if (is_opcode(opcode) == ORI) {
         /* Lab2-1 assignment */
-        warn("Lab2-1 assignment: ORI instruction\n");
-        exit(EXIT_FAILURE);
+        binary = (0x04 << 2) + 0x03;
+        binary += (reg_to_num(arg1, line_no) << 7);
+        binary += (0x6 << 12);
+        binary += (reg_to_num(arg2, line_no) << 15);
+        binary += (MASK11_0(validate_imm(arg3, 12, line_no)) << 20);
+        //warn("Lab2-1 assignment: ORI instruction\n");
+        //exit(EXIT_FAILURE);
     } else if (is_opcode(opcode) == ANDI) {
         /* Lab2-1 assignment */
-        warn("Lab2-1 assignment: ADDI instruction\n");
-        exit(EXIT_FAILURE);
+        binary = (0x04 << 2) + 0x03;
+        binary += (reg_to_num(arg1, line_no) << 7);
+        binary += (0x7 << 12);
+        binary += (reg_to_num(arg2, line_no) << 15);
+        binary += (MASK11_0(validate_imm(arg3, 12, line_no)) << 20);
+        //warn("Lab2-1 assignment: ADDI instruction\n");
+        //exit(EXIT_FAILURE);
     } else if (is_opcode(opcode) == LUI) {
         binary = (0x0D << 2) + 0x03;
         binary += (reg_to_num(arg1, line_no) << 7);
