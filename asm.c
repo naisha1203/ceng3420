@@ -347,11 +347,12 @@ int inst_to_binary(
          * tip: you may need the function `parse_regs_indirect_addr`
          * e.g., parse_regs_indirect_addr(arg2, line_no)
          */
-        binary = (0x0C << 3) + 0x07;
+        binary = (0x19 << 2) + 0x03;
         binary += (reg_to_num(arg1, line_no) << 7);
-        binary += (0x0 << 12);
-        binary += (parse_regs_indirect_addr(arg2, line_no) << 15);
-        binary += (validate_imm(arg3, 12, line_no)) << 20);
+        struct_regs_indirect_addr* ret = parse_regs_indirect_addr(arg2, line_no);
+        binary += (reg_to_num(ret->reg, line_no) << 15);
+        binary += (MASK11_0(ret->imm) << 20);
+}
         //warn("Lab2-1 assignment: JALR instruction\n");
         //exit(EXIT_FAILURE);
     } else if (is_opcode(opcode) == JAL) {
@@ -360,9 +361,15 @@ int inst_to_binary(
          * tip: you may need the function `handle_label_or_imm`
          * e.g., handle_label_or_imm(arg2, label_table, cmd_no, line_no)
          */
-        binary = (0x0D << 3) + 0x07;
+        binary = (0x1B << 2) + 0x03;
         binary += (reg_to_num(arg1, line_no) << 7);
-        binary += (handle_label_or_imm(line_no, arg2, label_table, number_of_labels) << 12);
+        int val = handle_label_or_imm(line_no, arg2, label_table, number_of_labels);
+        int offset = val - addr;
+
+        binary += (offset & 0xFF000);
+        binary += ((offset & 0x800) << 9);
+        binary += ((offset & 0x7FE) << 20);
+        binary += ((offset & 0x100000) << 11);
         //warn("Lab2-1 assignment: JAL instruction\n");
         //exit(EXIT_FAILURE);
     }
@@ -451,24 +458,57 @@ int inst_to_binary(
         binary += (MASK11_0(ret->imm) << 20);
     } else if (is_opcode(opcode) == LH) {
         /* Lab2-1 assignment */
-        warn("Lab2-1 assignment: LH instruction\n");
-        exit(EXIT_FAILURE);
+        binary = 0x03;
+        binary += (reg_to_num(arg1, line_no) << 7);
+        binary += (0x1 << 12);
+        struct_regs_indirect_addr* ret = parse_regs_indirect_addr(arg2, line_no);
+        binary += (reg_to_num(ret->reg, line_no) << 15);
+        binary += (MASK11_0(ret->imm) << 20);
+        //warn("Lab2-1 assignment: LH instruction\n");
+        //exit(EXIT_FAILURE);
     } else if (is_opcode(opcode) == LW) {
         /* Lab2-1 assignment */
-        warn("Lab2-1 assignment: LW instruction\n");
-        exit(EXIT_FAILURE);
+        binary = 0x03;
+        binary += (reg_to_num(arg1, line_no) << 7);
+        binary += (0x2 << 12);
+        struct_regs_indirect_addr* ret = parse_regs_indirect_addr(arg2, line_no);
+        binary += (reg_to_num(ret->reg, line_no) << 15);
+        binary += (MASK11_0(ret->imm) << 20);
+        //warn("Lab2-1 assignment: LW instruction\n");
+        //exit(EXIT_FAILURE);
     } else if (is_opcode(opcode) == SB) {
         /* Lab2-1 assignment */
-        warn("Lab2-1 assignment: SB instruction\n");
-        exit(EXIT_FAILURE);
+        binary = 0x23;
+        struct_regs_indirect_addr* ret = parse_regs_indirect_addr(arg2, line_no);
+        binary += ((ret->imm) << 7);
+        binary += (0x0 << 12);
+        binary += (reg_to_num(ret->reg, line_no) << 15);
+        binary += (reg_to_num(arg1, line_no) << 20);
+        binary += (MASK11_0(ret->imm) << 25);
+        //warn("Lab2-1 assignment: SB instruction\n");
+        //exit(EXIT_FAILURE);
     } else if (is_opcode(opcode) == SH) {
         /* Lab2-1 assignment */
-        warn("Lab2-1 assignment: SH instruction\n");
-        exit(EXIT_FAILURE);
+        binary = 0x23;
+        struct_regs_indirect_addr* ret = parse_regs_indirect_addr(arg2, line_no);
+        binary += ((ret->imm) << 7);
+        binary += (0x1 << 12);
+        binary += (reg_to_num(ret->reg, line_no) << 15);
+        binary += (reg_to_num(arg1, line_no) << 20);
+        binary += (MASK11_0(ret->imm) << 25);
+        //warn("Lab2-1 assignment: SH instruction\n");
+        //exit(EXIT_FAILURE);
     } else if (is_opcode(opcode) == SW) {
         /* Lab2-1 assignment */
-        warn("Lab2-1 assignment: SW instruction\n");
-        exit(EXIT_FAILURE);
+        binary = 0x23;
+        struct_regs_indirect_addr* ret = parse_regs_indirect_addr(arg2, line_no);
+        binary += ((ret->imm) << 7);
+        binary += (0x2 << 12);
+        binary += (reg_to_num(ret->reg, line_no) << 15);
+        binary += (reg_to_num(arg1, line_no) << 20);
+        binary += (MASK11_0(ret->imm) << 25);
+        //warn("Lab2-1 assignment: SW instruction\n");
+        //exit(EXIT_FAILURE);
     }
     return binary;
 }
