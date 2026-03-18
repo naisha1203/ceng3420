@@ -347,16 +347,24 @@ int inst_to_binary(
          * tip: you may need the function `parse_regs_indirect_addr`
          * e.g., parse_regs_indirect_addr(arg2, line_no)
          */
-        warn("Lab2-1 assignment: JALR instruction\n");
-        exit(EXIT_FAILURE);
+        binary = (0x0C << 3) + 0x07;
+        binary += (reg_to_num(arg1, line_no) << 7);
+        binary += (0x0 << 12);
+        binary += (parse_regs_indirect_addr(arg2, line_no) << 15);
+        binary += (validate_imm(arg3, 12, line_no)) << 20);
+        //warn("Lab2-1 assignment: JALR instruction\n");
+        //exit(EXIT_FAILURE);
     } else if (is_opcode(opcode) == JAL) {
         /*
          * Lab2-1 assignment
          * tip: you may need the function `handle_label_or_imm`
          * e.g., handle_label_or_imm(arg2, label_table, cmd_no, line_no)
          */
-        warn("Lab2-1 assignment: JAL instruction\n");
-        exit(EXIT_FAILURE);
+        binary = (0x0D << 3) + 0x07;
+        binary += (reg_to_num(arg1, line_no) << 7);
+        binary += (handle_label_or_imm(line_no, arg2, label_table, number_of_labels) << 12);
+        //warn("Lab2-1 assignment: JAL instruction\n");
+        //exit(EXIT_FAILURE);
     }
 
     // Conditional Branches
@@ -377,16 +385,61 @@ int inst_to_binary(
         binary += ((offset & 0x1000) << 19);
     } else if (is_opcode(opcode) == BNE) {
         /* Lab2-1 assignment */
-        warn("Lab2-1 assignment: BNE instruction\n");
-        exit(EXIT_FAILURE);
+        binary = (0x18 << 2) + 0x03;
+        binary += (0x1 << 12);
+        binary += (reg_to_num(arg1, line_no) << 15);
+        binary += (reg_to_num(arg2, line_no) << 20);
+        int val = label_to_num(
+            line_no, arg3, 12, label_table, number_of_labels
+        ), offset = val - addr;
+        // imm[11]
+        binary += ((offset & 0x800) >> 4);
+        // imm[4:1]
+        binary += ((offset & 0x1E) << 7);
+        // imm[10:5]
+        binary += ((offset & 0x7E0) << 20);
+        // imm[12]
+        binary += ((offset & 0x1000) << 19);
+        //warn("Lab2-1 assignment: BNE instruction\n");
+        //exit(EXIT_FAILURE);
     } else if (is_opcode(opcode) == BLT) {
         /* Lab2-1 assignment */
-        warn("Lab2-1 assignment: BLT instruction\n");
-        exit(EXIT_FAILURE);
+        binary = (0x18 << 2) + 0x03;
+        binary += (0x4 << 12);
+        binary += (reg_to_num(arg1, line_no) << 15);
+        binary += (reg_to_num(arg2, line_no) << 20);
+        int val = label_to_num(
+            line_no, arg3, 12, label_table, number_of_labels
+        ), offset = val - addr;
+        // imm[11]
+        binary += ((offset & 0x800) >> 4);
+        // imm[4:1]
+        binary += ((offset & 0x1E) << 7);
+        // imm[10:5]
+        binary += ((offset & 0x7E0) << 20);
+        // imm[12]
+        binary += ((offset & 0x1000) << 19);
+        //warn("Lab2-1 assignment: BLT instruction\n");
+        //exit(EXIT_FAILURE);
     } else if (is_opcode(opcode) == BGE) {
         /* Lab2-1 assignment */
-        warn("Lab2-1 assignment: BGE instruction\n");
-        exit(EXIT_FAILURE);
+        binary = (0x18 << 2) + 0x03;
+        binary += (0x5 << 12);
+        binary += (reg_to_num(arg1, line_no) << 15);
+        binary += (reg_to_num(arg2, line_no) << 20);
+        int val = label_to_num(
+            line_no, arg3, 12, label_table, number_of_labels
+        ), offset = val - addr;
+        // imm[11]
+        binary += ((offset & 0x800) >> 4);
+        // imm[4:1]
+        binary += ((offset & 0x1E) << 7);
+        // imm[10:5]
+        binary += ((offset & 0x7E0) << 20);
+        // imm[12]
+        binary += ((offset & 0x1000) << 19);
+        //warn("Lab2-1 assignment: BGE instruction\n");
+        //exit(EXIT_FAILURE);
     }
 
     // Load and Store Instructions
